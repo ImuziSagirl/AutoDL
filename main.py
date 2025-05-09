@@ -189,60 +189,60 @@ class HelloPlugin(BasePlugin):
 /grabstatus - 查看抢卡状态
 """
     
-#     # 密码设置
-#     def _handle_password_command(self, query, password):
-#         user_id = query.sender.id
-#         config = self._get_user_config(user_id)
-#         config.password = password
-#         self._save_user_config(user_id, config)
-#         query.respond("密码已设置")
+    # 密码设置
+    def _handle_password_command(self, query, password):
+        user_id = query.sender.id
+        config = self._get_user_config(user_id)
+        config.password = password
+        self._save_user_config(user_id, config)
+        query.respond("密码已设置")
     
-#     # 查看GPU状态
-#     def _handle_gpuvalid_command(self, query):
-#         user_id = query.sender.id
-#         client = self._init_autodl_client(user_id)
+    # 查看GPU状态
+    def _handle_gpuvalid_command(self, query):
+        user_id = query.sender.id
+        client = self._init_autodl_client(user_id)
         
-#         if not client:
-#             query.respond("请先设置用户名和密码")
-#             return
+        if not client:
+            query.respond("请先设置用户名和密码")
+            return
         
-#         query.respond("正在查询GPU状态...")
-#         instances = client.get_instances()
+        query.respond("正在查询GPU状态...")
+        instances = client.get_instances()
         
-#         if not instances:
-#             query.respond("获取实例信息失败")
-#             return
+        if not instances:
+            query.respond("获取实例信息失败")
+            return
         
-#         result = "GPU状态:\n\n"
-#         for i, instance in enumerate(instances):
-#             result += f"机器: {instance.region_name}-{instance.machine_alias}\n"
-#             result += f"显卡: {instance.snapshot_gpu_alias_name}\n"
-#             result += f"UUID: {instance.uuid}\n"
-#             result += f"GPU数量: {instance.gpu_idle_num}/{instance.gpu_all_num}\n"
+        result = "GPU状态:\n\n"
+        for i, instance in enumerate(instances):
+            result += f"机器: {instance.region_name}-{instance.machine_alias}\n"
+            result += f"显卡: {instance.snapshot_gpu_alias_name}\n"
+            result += f"UUID: {instance.uuid}\n"
+            result += f"GPU数量: {instance.gpu_idle_num}/{instance.gpu_all_num}\n"
             
-#             # 显示释放时间
-#             stopped_at = instance.stopped_at
-#             if stopped_at and "time" in stopped_at:
-#                 import datetime
-#                 stop_time = stopped_at["time"]
-#                 if stop_time:
-#                     # 计算剩余释放时间
-#                     try:
-#                         stop_datetime = datetime.datetime.fromisoformat(stop_time.replace('Z', '+00:00'))
-#                         release_time = stop_datetime + datetime.timedelta(hours=24)
-#                         now = datetime.datetime.now(datetime.timezone.utc)
-#                         if release_time > now:
-#                             remaining = release_time - now
-#                             hours = remaining.seconds // 3600
-#                             minutes = (remaining.seconds % 3600) // 60
-#                             result += f"释放时间: 还剩{hours}小时{minutes}分钟\n"
-#                     except:
-#                         pass
+            # 显示释放时间
+            stopped_at = instance.stopped_at
+            if stopped_at and "time" in stopped_at:
+                import datetime
+                stop_time = stopped_at["time"]
+                if stop_time:
+                    # 计算剩余释放时间
+                    try:
+                        stop_datetime = datetime.datetime.fromisoformat(stop_time.replace('Z', '+00:00'))
+                        release_time = stop_datetime + datetime.timedelta(hours=24)
+                        now = datetime.datetime.now(datetime.timezone.utc)
+                        if release_time > now:
+                            remaining = release_time - now
+                            hours = remaining.seconds // 3600
+                            minutes = (remaining.seconds % 3600) // 60
+                            result += f"释放时间: 还剩{hours}小时{minutes}分钟\n"
+                    except:
+                        pass
             
-#             if i < len(instances)-1:
-#                 result += "----------------\n"
+            if i < len(instances)-1:
+                result += "----------------\n"
         
-#         query.respond(result)
+        query.respond(result)
     
 #     # 查看实例详情
 #     def _handle_instances_command(self, query):
