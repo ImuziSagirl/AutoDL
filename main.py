@@ -671,165 +671,165 @@ class HelloPlugin(BasePlugin):
                 self._start_grab_task(user_id)
                 self.host.send_message(user_id, "系统重启，抢卡任务已自动恢复")
 
-#     # 内容函数：查询GPU状态
-#     @llm_func("check_autodl_gpu", 
-#         description="检查用户AutoDL平台上的GPU资源和实例情况",
-#         parameters=[])
-#     async def check_autodl_gpu_func(self, query_obj) -> str:
-#         user_id = query_obj.sender.id
-#         client = self._init_autodl_client(user_id)
+    # 内容函数：查询GPU状态
+    @llm_func("check_autodl_gpu", 
+        description="检查用户AutoDL平台上的GPU资源和实例情况",
+        parameters=[])
+    async def check_autodl_gpu_func(self, query_obj) -> str:
+        user_id = query_obj.sender.id
+        client = self._init_autodl_client(user_id)
         
-#         if not client:
-#             return "请先设置您的AutoDL账户。使用 /user 和 /password 命令设置用户名和密码。"
+        if not client:
+            return "请先设置您的AutoDL账户。使用 /user 和 /password 命令设置用户名和密码。"
         
-#         try:
-#             instances = client.get_instances()
-#             if not instances:
-#                 return "无法获取您的实例信息，请检查账号设置是否正确。"
+        try:
+            instances = client.get_instances()
+            if not instances:
+                return "无法获取您的实例信息，请检查账号设置是否正确。"
             
-#             result = "🖥️ 您的AutoDL实例情况：\n\n"
-#             available_gpus = 0
+            result = "🖥️ 您的AutoDL实例情况：\n\n"
+            available_gpus = 0
             
-#             for i, instance in enumerate(instances):
-#                 result += f"📊 {instance.region_name}-{instance.machine_alias}\n"
-#                 result += f"🔌 显卡: {instance.snapshot_gpu_alias_name}\n"
-#                 result += f"🆔 UUID: {instance.uuid}\n"
-#                 result += f"🎮 GPU状态: {instance.gpu_idle_num}/{instance.gpu_all_num} 可用\n"
+            for i, instance in enumerate(instances):
+                result += f"📊 {instance.region_name}-{instance.machine_alias}\n"
+                result += f"🔌 显卡: {instance.snapshot_gpu_alias_name}\n"
+                result += f"🆔 UUID: {instance.uuid}\n"
+                result += f"🎮 GPU状态: {instance.gpu_idle_num}/{instance.gpu_all_num} 可用\n"
                 
-#                 if instance.gpu_idle_num > 0:
-#                     available_gpus += 1
+                if instance.gpu_idle_num > 0:
+                    available_gpus += 1
                     
-#                 if i < len(instances)-1:
-#                     result += "----------------\n"
+                if i < len(instances)-1:
+                    result += "----------------\n"
             
-#             # 添加总结信息
-#             if available_gpus > 0:
-#                 result += f"\n✅ 总结: 您有 {available_gpus} 个实例有可用GPU"
-#             else:
-#                 result += "\n❌ 总结: 目前没有可用的GPU资源"
+            # 添加总结信息
+            if available_gpus > 0:
+                result += f"\n✅ 总结: 您有 {available_gpus} 个实例有可用GPU"
+            else:
+                result += "\n❌ 总结: 目前没有可用的GPU资源"
                 
-#             return result
+            return result
             
-#         except Exception as e:
-#             self.host.logger.error(f"查询GPU状态出错: {str(e)}")
-#             return f"查询GPU状态时出错: {str(e)}"
+        except Exception as e:
+            self.host.logger.error(f"查询GPU状态出错: {str(e)}")
+            return f"查询GPU状态时出错: {str(e)}"
 
-#     # 内容函数：启动实例
-#     @llm_func("start_autodl_instance", 
-#         description="启动用户的AutoDL实例",
-#         parameters=[
-#             {"name": "uuid", "description": "要启动的实例UUID", "required": True},
-#             {"name": "use_cpu", "description": "是否使用无卡模式启动", "required": False}
-#         ])
-#     async def start_autodl_instance_func(self, uuid: str, use_cpu: bool = False) -> str:
-#         query_obj = getattr(self, "current_query", None)
-#         if not query_obj:
-#             return "操作失败：无法获取用户信息"
+    # 内容函数：启动实例
+    @llm_func("start_autodl_instance", 
+        description="启动用户的AutoDL实例",
+        parameters=[
+            {"name": "uuid", "description": "要启动的实例UUID", "required": True},
+            {"name": "use_cpu", "description": "是否使用无卡模式启动", "required": False}
+        ])
+    async def start_autodl_instance_func(self, uuid: str, use_cpu: bool = False) -> str:
+        query_obj = getattr(self, "current_query", None)
+        if not query_obj:
+            return "操作失败：无法获取用户信息"
             
-#         user_id = query_obj.sender.id
-#         client = self._init_autodl_client(user_id)
+        user_id = query_obj.sender.id
+        client = self._init_autodl_client(user_id)
         
-#         if not client:
-#             return "请先设置您的AutoDL账户。使用 /user 和 /password 命令设置用户名和密码。"
+        if not client:
+            return "请先设置您的AutoDL账户。使用 /user 和 /password 命令设置用户名和密码。"
         
-#         try:
-#             if not uuid:
-#                 return "请提供要启动的实例UUID"
+        try:
+            if not uuid:
+                return "请提供要启动的实例UUID"
                 
-#             success = client.power_on(uuid, use_cpu=use_cpu)
+            success = client.power_on(uuid, use_cpu=use_cpu)
             
-#             if success:
-#                 mode = "无卡模式" if use_cpu else "普通模式"
-#                 return f"✅ 实例 {uuid} 已成功启动({mode})"
-#             else:
-#                 return f"❌ 实例 {uuid} 启动失败，请检查UUID是否正确或实例状态"
+            if success:
+                mode = "无卡模式" if use_cpu else "普通模式"
+                return f"✅ 实例 {uuid} 已成功启动({mode})"
+            else:
+                return f"❌ 实例 {uuid} 启动失败，请检查UUID是否正确或实例状态"
                 
-#         except Exception as e:
-#             self.host.logger.error(f"启动实例出错: {str(e)}")
-#             return f"启动实例时出错: {str(e)}"
+        except Exception as e:
+            self.host.logger.error(f"启动实例出错: {str(e)}")
+            return f"启动实例时出错: {str(e)}"
 
-#     # 内容函数：关闭实例
-#     @llm_func("stop_autodl_instance", 
-#         description="关闭用户的AutoDL实例",
-#         parameters=[
-#             {"name": "uuid", "description": "要关闭的实例UUID", "required": True}
-#         ])
-#     async def stop_autodl_instance_func(self, uuid: str) -> str:
-#         query_obj = getattr(self, "current_query", None)
-#         if not query_obj:
-#             return "操作失败：无法获取用户信息"
+    # 内容函数：关闭实例
+    @llm_func("stop_autodl_instance", 
+        description="关闭用户的AutoDL实例",
+        parameters=[
+            {"name": "uuid", "description": "要关闭的实例UUID", "required": True}
+        ])
+    async def stop_autodl_instance_func(self, uuid: str) -> str:
+        query_obj = getattr(self, "current_query", None)
+        if not query_obj:
+            return "操作失败：无法获取用户信息"
             
-#         user_id = query_obj.sender.id
-#         client = self._init_autodl_client(user_id)
+        user_id = query_obj.sender.id
+        client = self._init_autodl_client(user_id)
         
-#         if not client:
-#             return "请先设置您的AutoDL账户。使用 /user 和 /password 命令设置用户名和密码。"
+        if not client:
+            return "请先设置您的AutoDL账户。使用 /user 和 /password 命令设置用户名和密码。"
         
-#         try:
-#             if not uuid:
-#                 return "请提供要关闭的实例UUID"
+        try:
+            if not uuid:
+                return "请提供要关闭的实例UUID"
                 
-#             success = client.power_off(uuid)
+            success = client.power_off(uuid)
             
-#             if success:
-#                 return f"✅ 实例 {uuid} 已成功关闭"
-#             else:
-#                 return f"❌ 实例 {uuid} 关闭失败，请检查UUID是否正确或实例状态"
+            if success:
+                return f"✅ 实例 {uuid} 已成功关闭"
+            else:
+                return f"❌ 实例 {uuid} 关闭失败，请检查UUID是否正确或实例状态"
                 
-#         except Exception as e:
-#             self.host.logger.error(f"关闭实例出错: {str(e)}")
-#             return f"关闭实例时出错: {str(e)}"
+        except Exception as e:
+            self.host.logger.error(f"关闭实例出错: {str(e)}")
+            return f"关闭实例时出错: {str(e)}"
 
-#     # 内容函数：抢卡
-#     @llm_func("grab_autodl_gpu", 
-#         description="设置并启动AutoDL抢卡任务",
-#         parameters=[
-#             {"name": "gpu_type", "description": "要抢的GPU型号，如A100", "required": False},
-#             {"name": "uuid", "description": "要抢的实例UUID", "required": False},
-#             {"name": "interval", "description": "检查间隔(秒)，最小3秒", "required": False}
-#         ])
-#     async def grab_autodl_gpu_func(self, gpu_type: str = "", uuid: str = "", interval: int = 5) -> str:
-#         query_obj = getattr(self, "current_query", None)
-#         if not query_obj:
-#             return "操作失败：无法获取用户信息"
+    # 内容函数：抢卡
+    @llm_func("grab_autodl_gpu", 
+        description="设置并启动AutoDL抢卡任务",
+        parameters=[
+            {"name": "gpu_type", "description": "要抢的GPU型号，如A100", "required": False},
+            {"name": "uuid", "description": "要抢的实例UUID", "required": False},
+            {"name": "interval", "description": "检查间隔(秒)，最小3秒", "required": False}
+        ])
+    async def grab_autodl_gpu_func(self, gpu_type: str = "", uuid: str = "", interval: int = 5) -> str:
+        query_obj = getattr(self, "current_query", None)
+        if not query_obj:
+            return "操作失败：无法获取用户信息"
             
-#         user_id = query_obj.sender.id
+        user_id = query_obj.sender.id
         
-#         if not gpu_type and not uuid:
-#             return "请至少提供一个GPU型号或实例UUID"
+        if not gpu_type and not uuid:
+            return "请至少提供一个GPU型号或实例UUID"
             
-#         # 防止间隔过小
-#         if interval < 3:
-#             interval = 3
+        # 防止间隔过小
+        if interval < 3:
+            interval = 3
             
-#         # 停止现有抢卡任务
-#         self._stop_grab_task(user_id)
+        # 停止现有抢卡任务
+        self._stop_grab_task(user_id)
         
-#         # 设置新的抢卡配置
-#         config = self._get_user_config(user_id)
+        # 设置新的抢卡配置
+        config = self._get_user_config(user_id)
         
-#         if not config.grab_config:
-#             config.grab_config = GrabConfig()
+        if not config.grab_config:
+            config.grab_config = GrabConfig()
             
-#         config.grab_config.enabled = True
-#         config.grab_config.is_running = True
-#         config.grab_config.check_interval = interval
+        config.grab_config.enabled = True
+        config.grab_config.is_running = True
+        config.grab_config.check_interval = interval
         
-#         if uuid:
-#             config.grab_config.instance_uuid = uuid
-#             config.grab_config.gpu_types = []
-#             grab_target = f"实例 {uuid}"
-#         else:
-#             config.grab_config.instance_uuid = ""
-#             config.grab_config.gpu_types = [gpu_type]
-#             grab_target = f"GPU型号 {gpu_type}"
+        if uuid:
+            config.grab_config.instance_uuid = uuid
+            config.grab_config.gpu_types = []
+            grab_target = f"实例 {uuid}"
+        else:
+            config.grab_config.instance_uuid = ""
+            config.grab_config.gpu_types = [gpu_type]
+            grab_target = f"GPU型号 {gpu_type}"
             
-#         self._save_user_config(user_id, config)
+        self._save_user_config(user_id, config)
         
-#         # 启动抢卡任务
-#         self._start_grab_task(user_id, query_obj)
+        # 启动抢卡任务
+        self._start_grab_task(user_id, query_obj)
         
-#         return f"✅ 已开始抢卡：{grab_target}，检查间隔 {interval} 秒"
+        return f"✅ 已开始抢卡：{grab_target}，检查间隔 {interval} 秒"
         
 #     # 内容函数：停止抢卡
 #     @llm_func("stop_autodl_grab", 
