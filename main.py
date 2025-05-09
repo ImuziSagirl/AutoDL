@@ -244,32 +244,32 @@ class HelloPlugin(BasePlugin):
         
         query.respond(result)
     
-#     # 查看实例详情
-#     def _handle_instances_command(self, query):
-#         user_id = query.sender.id
-#         client = self._init_autodl_client(user_id)
+    # 查看实例详情
+    def _handle_instances_command(self, query):
+        user_id = query.sender.id
+        client = self._init_autodl_client(user_id)
         
-#         if not client:
-#             query.respond("请先设置用户名和密码")
-#             return
+        if not client:
+            query.respond("请先设置用户名和密码")
+            return
         
-#         query.respond("正在查询实例...")
-#         instances = client.get_instances()
+        query.respond("正在查询实例...")
+        instances = client.get_instances()
         
-#         if not instances:
-#             query.respond("获取实例信息失败")
-#             return
+        if not instances:
+            query.respond("获取实例信息失败")
+            return
         
-#         result = "实例列表:\n\n"
-#         for i, instance in enumerate(instances):
-#             result += f"{i+1}. {instance.region_name}-{instance.machine_alias}\n"
-#             result += f"显卡: {instance.snapshot_gpu_alias_name}\n"
-#             result += f"UUID: {instance.uuid}\n"
-#             result += f"GPU: {instance.gpu_idle_num}/{instance.gpu_all_num}\n"
-#             if i < len(instances)-1:
-#                 result += "----------------\n"
+        result = "实例列表:\n\n"
+        for i, instance in enumerate(instances):
+            result += f"{i+1}. {instance.region_name}-{instance.machine_alias}\n"
+            result += f"显卡: {instance.snapshot_gpu_alias_name}\n"
+            result += f"UUID: {instance.uuid}\n"
+            result += f"GPU: {instance.gpu_idle_num}/{instance.gpu_all_num}\n"
+            if i < len(instances)-1:
+                result += "----------------\n"
         
-#         query.respond(result)
+        query.respond(result)
     
 #     # 启动实例
 #     def _handle_start_command(self, query, uuid):
