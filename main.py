@@ -53,9 +53,9 @@ class HelloPlugin(BasePlugin):
     # def __del__(self):
     #     pass
     def __init__(self, host: APIHost):
-        super().__init__(host)
-        self.host = host
-        self.ap = host.ap
+        # super().__init__(host)
+        # self.host = host
+        # self.ap = host.ap
         
         # 用户配置
         self.storage = UserStorage("autodl_users.db")
