@@ -271,68 +271,68 @@ class HelloPlugin(BasePlugin):
         
         query.respond(result)
     
-#     # 启动实例
-#     def _handle_start_command(self, query, uuid):
-#         user_id = query.sender.id
-#         client = self._init_autodl_client(user_id)
+    # 启动实例
+    def _handle_start_command(self, query, uuid):
+        user_id = query.sender.id
+        client = self._init_autodl_client(user_id)
         
-#         if not client:
-#             query.respond("请先设置用户名和密码")
-#             return
+        if not client:
+            query.respond("请先设置用户名和密码")
+            return
             
-#         if not uuid:
-#             query.respond("请提供实例UUID")
-#             return
+        if not uuid:
+            query.respond("请提供实例UUID")
+            return
         
-#         query.respond(f"正在启动实例 {uuid}...")
-#         success = client.power_on(uuid, use_cpu=False)
+        query.respond(f"正在启动实例 {uuid}...")
+        success = client.power_on(uuid, use_cpu=False)
         
-#         if success:
-#             query.respond("实例启动成功")
-#         else:
-#             query.respond("实例启动失败")
+        if success:
+            query.respond("实例启动成功")
+        else:
+            query.respond("实例启动失败")
     
-#     # 无卡模式启动实例
-#     def _handle_startcpu_command(self, query, uuid):
-#         user_id = query.sender.id
-#         client = self._init_autodl_client(user_id)
+    # 无卡模式启动实例
+    def _handle_startcpu_command(self, query, uuid):
+        user_id = query.sender.id
+        client = self._init_autodl_client(user_id)
         
-#         if not client:
-#             query.respond("请先设置用户名和密码")
-#             return
+        if not client:
+            query.respond("请先设置用户名和密码")
+            return
             
-#         if not uuid:
-#             query.respond("请提供实例UUID")
-#             return
+        if not uuid:
+            query.respond("请提供实例UUID")
+            return
         
-#         query.respond(f"正在启动实例(无卡模式) {uuid}...")
-#         success = client.power_on(uuid, use_cpu=True)
+        query.respond(f"正在启动实例(无卡模式) {uuid}...")
+        success = client.power_on(uuid, use_cpu=True)
         
-#         if success:
-#             query.respond("实例无卡启动成功")
-#         else:
-#             query.respond("实例无卡启动失败")
+        if success:
+            query.respond("实例无卡启动成功")
+        else:
+            query.respond("实例无卡启动失败")
     
-#     # 关闭实例
-#     def _handle_stop_command(self, query, uuid):
-#         user_id = query.sender.id
-#         client = self._init_autodl_client(user_id)
+    # 关闭实例
+    def _handle_stop_command(self, query, uuid):
+        user_id = query.sender.id
+        client = self._init_autodl_client(user_id)
         
-#         if not client:
-#             query.respond("请先设置用户名和密码")
-#             return
+        if not client:
+            query.respond("请先设置用户名和密码")
+            return
             
-#         if not uuid:
-#             query.respond("请提供实例UUID")
-#             return
+        if not uuid:
+            query.respond("请提供实例UUID")
+            return
         
-#         query.respond(f"正在关闭实例 {uuid}...")
-#         success = client.power_off(uuid)
+        query.respond(f"正在关闭实例 {uuid}...")
+        success = client.power_off(uuid)
         
-#         if success:
-#             query.respond("实例关闭成功")
-#         else:
-#             query.respond("实例关闭失败")
+        if success:
+            query.respond("实例关闭成功")
+        else:
+            query.respond("实例关闭失败")
     
 #     # 刷新实例时长
 #     def _handle_refresh_command(self, query, uuid):
