@@ -10,7 +10,7 @@ import logging
 from typing import Dict, List, Optional, Any
 
 @register(name="AutoDLPlugin", description="AutoDL监控与抢卡助手", version="1.0.0", author="YourName")
-class AutoDLPlugin(BasePlugin):
+class HelloPlugin(BasePlugin):
         # 插件加载时触发
     def __init__(self, host: APIHost):
         pass
