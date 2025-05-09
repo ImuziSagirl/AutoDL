@@ -588,77 +588,77 @@ class HelloPlugin(BasePlugin):
         
         self.grab_threads[user_id] = thread
     
-    # # 抢卡任务循环
-    # def _grab_task_loop(self, user_id: int, query, stop_signal: threading.Event) -> None:
-    #     config = self._get_user_config(user_id)
-    #     if not config.grab_config:
-    #         return
+    # 抢卡任务循环
+    def _grab_task_loop(self, user_id: int, query, stop_signal: threading.Event) -> None:
+        config = self._get_user_config(user_id)
+        if not config.grab_config:
+            return
             
-    #     client = self._init_autodl_client(user_id)
-    #     if not client:
-    #         query.respond("抢卡失败: 未设置用户名或密码")
-    #         self._stop_grab_task(user_id)
-    #         return
+        client = self._init_autodl_client(user_id)
+        if not client:
+            query.respond("抢卡失败: 未设置用户名或密码")
+            self._stop_grab_task(user_id)
+            return
             
-    #     # 获取检查间隔
-    #     interval = config.grab_config.check_interval
-    #     if interval < 3:
-    #         interval = 3  # 最小间隔3秒
+        # 获取检查间隔
+        interval = config.grab_config.check_interval
+        if interval < 3:
+            interval = 3  # 最小间隔3秒
             
-#         try:
-#             # 抢卡循环
-#             while not stop_signal.is_set():
-#                 try:
-#                     # 按UUID抢卡
-#                     if config.grab_config.instance_uuid:
-#                         instances = client.get_instances()
-#                         target_uuid = config.grab_config.instance_uuid
+        try:
+            # 抢卡循环
+            while not stop_signal.is_set():
+                try:
+                    # 按UUID抢卡
+                    if config.grab_config.instance_uuid:
+                        instances = client.get_instances()
+                        target_uuid = config.grab_config.instance_uuid
                         
-#                         for instance in instances:
-#                             if instance.uuid == target_uuid and instance.gpu_idle_num > 0:
-#                                 # 有空闲GPU，启动实例
-#                                 success = client.power_on(target_uuid)
+                        for instance in instances:
+                            if instance.uuid == target_uuid and instance.gpu_idle_num > 0:
+                                # 有空闲GPU，启动实例
+                                success = client.power_on(target_uuid)
                                 
-#                                 if success:
-#                                     query.respond(f"抢卡成功: 实例 {target_uuid} 已启动")
-#                                     self._stop_grab_task(user_id)
-#                                     return
-#                                 else:
-#                                     query.respond(f"抢卡失败: 实例 {target_uuid} 启动失败")
+                                if success:
+                                    query.respond(f"抢卡成功: 实例 {target_uuid} 已启动")
+                                    self._stop_grab_task(user_id)
+                                    return
+                                else:
+                                    query.respond(f"抢卡失败: 实例 {target_uuid} 启动失败")
                     
-#                     # 按GPU型号抢卡
-#                     elif config.grab_config.gpu_types:
-#                         instances = client.get_instances()
-#                         target_types = config.grab_config.gpu_types
+                    # 按GPU型号抢卡
+                    elif config.grab_config.gpu_types:
+                        instances = client.get_instances()
+                        target_types = config.grab_config.gpu_types
                         
-#                         for instance in instances:
-#                             if (instance.snapshot_gpu_alias_name in target_types or 
-#                                 any(t in instance.snapshot_gpu_alias_name for t in target_types)) and \
-#                                instance.gpu_idle_num > 0:
-#                                 # 有匹配的GPU且有空闲，启动实例
-#                                 success = client.power_on(instance.uuid)
+                        for instance in instances:
+                            if (instance.snapshot_gpu_alias_name in target_types or 
+                                any(t in instance.snapshot_gpu_alias_name for t in target_types)) and \
+                               instance.gpu_idle_num > 0:
+                                # 有匹配的GPU且有空闲，启动实例
+                                success = client.power_on(instance.uuid)
                                 
-#                                 if success:
-#                                     query.respond(f"抢卡成功: 实例 {instance.uuid} ({instance.snapshot_gpu_alias_name}) 已启动")
-#                                     self._stop_grab_task(user_id)
-#                                     return
-#                                 else:
-#                                     query.respond(f"抢卡失败: 实例 {instance.uuid} 启动失败")
+                                if success:
+                                    query.respond(f"抢卡成功: 实例 {instance.uuid} ({instance.snapshot_gpu_alias_name}) 已启动")
+                                    self._stop_grab_task(user_id)
+                                    return
+                                else:
+                                    query.respond(f"抢卡失败: 实例 {instance.uuid} 启动失败")
                 
-#                 except Exception as e:
-#                     self.host.logger.error(f"抢卡过程出错: {str(e)}")
+                except Exception as e:
+                    self.host.logger.error(f"抢卡过程出错: {str(e)}")
                 
-#                 # 等待下一次检查
-#                 stop_signal.wait(interval)
+                # 等待下一次检查
+                stop_signal.wait(interval)
                 
-#         except Exception as e:
-#             self.host.logger.error(f"抢卡任务异常: {str(e)}")
-#         finally:
-#             # 确保任务结束时更新状态
-#             config = self._get_user_config(user_id)
-#             if config.grab_config:
-#                 config.grab_config.is_running = False
-#                 self._save_user_config(user_id, config)
+        except Exception as e:
+            self.host.logger.error(f"抢卡任务异常: {str(e)}")
+        finally:
+            # 确保任务结束时更新状态
+            config = self._get_user_config(user_id)
+            if config.grab_config:
+                config.grab_config.is_running = False
+                self._save_user_config(user_id, config)
     
 #     # 插件初始化时重新启动之前的抢卡任务
 #     @handler(PluginInitEvent)
