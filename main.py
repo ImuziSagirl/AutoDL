@@ -847,21 +847,21 @@ class HelloPlugin(BasePlugin):
         else:
             return "❌ 当前没有正在运行的抢卡任务"
             
-    # 设置当前查询对象（用于内容函数）
-    @handler(BeforeLLMFuncCallingEvent)
-    async def before_func_calling(self, ctx: EventContext):
-        self.current_query = ctx.event.query
+    # # 设置当前查询对象（用于内容函数）
+    # @handler(BeforeLLMFuncCallingEvent)
+    # async def before_func_calling(self, ctx: EventContext):
+    #     self.current_query = ctx.event.query
         
-    @handler(AfterLLMFuncCallingEvent)
-    async def after_func_calling(self, ctx: EventContext):
-        self.current_query = None
+    # @handler(AfterLLMFuncCallingEvent)
+    # async def after_func_calling(self, ctx: EventContext):
+    #     self.current_query = None
 
-#     # 插件卸载时触发
-#     def __del__(self):
-#         # 停止所有抢卡任务
-#         for user_id in list(self.grab_tasks.keys()):
-#             self._stop_grab_task(user_id)
+    # 插件卸载时触发
+    def __del__(self):
+        # 停止所有抢卡任务
+        for user_id in list(self.grab_tasks.keys()):
+            self._stop_grab_task(user_id)
         
-#         # 保存所有用户配置
-#         for user_id, config in self.user_configs.items():
-#             self.storage.save_user(user_id, config)
+        # 保存所有用户配置
+        for user_id, config in self.user_configs.items():
+            self.storage.save_user(user_id, config)
