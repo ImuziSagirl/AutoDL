@@ -11,47 +11,88 @@ from typing import Dict, List, Optional, Any
 
 @register(name="AutoDLPlugin", description="AutoDL监控与抢卡助手", version="1.0.0", author="YourName")
 class AutoDLPlugin(BasePlugin):
+        # 插件加载时触发
     def __init__(self, host: APIHost):
-        super().__init__(host)
-        self.host = host
-        self.ap = host.ap
-        
-        # 用户配置
-        self.storage = UserStorage("autodl_users.db")
-        self.user_configs: Dict[int, AutoDLConfig] = {}
-        
-        # 抢卡任务
-        self.grab_tasks: Dict[int, threading.Event] = {}
-        self.grab_threads: Dict[int, threading.Thread] = {}
-        
-        # 加载所有用户配置
-        self.user_configs = self.storage.load_all_users()
-        
-        self.host.logger.info("AutoDL插件初始化完成")
-    
+        pass
+
     # 异步初始化
     async def initialize(self):
         pass
-    
-    
-    def _get_user_config(self, user_id: int) -> AutoDLConfig:
-        """获取用户配置"""
-        if user_id not in self.user_configs:
-            self.user_configs[user_id] = AutoDLConfig()
-        return self.user_configs[user_id]
-    
-    def _save_user_config(self, user_id: int, config: AutoDLConfig) -> None:
-        """保存用户配置"""
-        self.user_configs[user_id] = config
-        self.storage.save_user(user_id, config)
-    
-    def _init_autodl_client(self, user_id: int) -> Optional[AutoDLClient]:
-        """初始化AutoDL客户端"""
-        config = self._get_user_config(user_id)
-        if not config.username or not config.password:
-            return None
+
+    # 当收到个人消息时触发
+    @handler(PersonNormalMessageReceived)
+    async def person_normal_message_received(self, ctx: EventContext):
+        msg = ctx.event.text_message  # 这里的 event 即为 PersonNormalMessageReceived 的对象
+        if msg == "hello":  # 如果消息为hello
+
+            # 输出调试信息
+            self.ap.logger.debug("hello, {}".format(ctx.event.sender_id))
+
+            # 回复消息 "hello, <发送者id>!"
+            ctx.add_return("reply", ["hello, {}!".format(ctx.event.sender_id)])
+
+            # 阻止该事件默认行为（向接口获取回复）
+            ctx.prevent_default()
+
+    # 当收到群消息时触发
+    @handler(GroupNormalMessageReceived)
+    async def group_normal_message_received(self, ctx: EventContext):
+        msg = ctx.event.text_message  # 这里的 event 即为 GroupNormalMessageReceived 的对象
+        if msg == "hello":  # 如果消息为hello
+
+            # 输出调试信息
+            self.ap.logger.debug("hello, {}".format(ctx.event.sender_id))
+
+            # 回复消息 "hello, everyone!"
+            ctx.add_return("reply", ["hello, everyone!"])
+
+            # 阻止该事件默认行为（向接口获取回复）
+            ctx.prevent_default()
+
+    # 插件卸载时触发
+    def __del__(self):
+        pass
+    # def __init__(self, host: APIHost):
+    #     super().__init__(host)
+    #     self.host = host
+    #     self.ap = host.ap
         
-        return AutoDLClient(config.username, config.password)
+    #     # 用户配置
+    #     self.storage = UserStorage("autodl_users.db")
+    #     self.user_configs: Dict[int, AutoDLConfig] = {}
+        
+    #     # 抢卡任务
+    #     self.grab_tasks: Dict[int, threading.Event] = {}
+    #     self.grab_threads: Dict[int, threading.Thread] = {}
+        
+    #     # 加载所有用户配置
+    #     self.user_configs = self.storage.load_all_users()
+        
+    #     self.host.logger.info("AutoDL插件初始化完成")
+    
+    # # 异步初始化
+    # async def initialize(self):
+    #     pass
+    
+    
+    # def _get_user_config(self, user_id: int) -> AutoDLConfig:
+    #     """获取用户配置"""
+    #     if user_id not in self.user_configs:
+    #         self.user_configs[user_id] = AutoDLConfig()
+    #     return self.user_configs[user_id]
+    
+    # def _save_user_config(self, user_id: int, config: AutoDLConfig) -> None:
+    #     """保存用户配置"""
+    #     self.user_configs[user_id] = config
+    #     self.storage.save_user(user_id, config)
+    
+    # def _init_autodl_client(self, user_id: int) -> Optional[AutoDLClient]:
+    #     """初始化AutoDL客户端"""
+    #     config = self._get_user_config(user_id)
+    #     if not config.username or not config.password:
+    #         return None
+        
+    #     return AutoDLClient(config.username, config.password)
     
 #     # 命令处理
 #     @handler(PersonNormalMessageReceived)
