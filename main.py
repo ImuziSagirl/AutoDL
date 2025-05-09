@@ -3,7 +3,7 @@ from pkg.plugin.events import *  # 导入事件类
 from autodl_client import AutoDLClient
 from models import AutoDLConfig, GrabConfig, GrabMenuData, Instance
 from storage import UserStorage
-import threading
+
 import time
 import logging
 
