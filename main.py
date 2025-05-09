@@ -1,14 +1,10 @@
-import threading
-import time
-import logging
-from typing import Dict, List, Optional, Any
 
 from pkg.plugin.context import register, handler, content_func, BasePlugin, APIHost, EventContext
 from pkg.plugin.events import *
 
-from autodl_client import AutoDLClient
-from models import AutoDLConfig, GrabConfig, GrabMenuData, Instance
-from storage import UserStorage
+from plugins.AutoDL.autodl_client import AutoDLClient
+from plugins.AutoDL.models import AutoDLConfig, GrabConfig, GrabMenuData, Instance
+from plugins.AutoDL.storage import UserStorage
 
 
 # 注册插件
