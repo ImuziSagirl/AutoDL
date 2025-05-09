@@ -831,21 +831,21 @@ class HelloPlugin(BasePlugin):
         
         return f"✅ 已开始抢卡：{grab_target}，检查间隔 {interval} 秒"
         
-    # 内容函数：停止抢卡
-    @llm_func("stop_autodl_grab", 
-        description="停止正在运行的AutoDL抢卡任务",
-        parameters=[])
-    async def stop_autodl_grab_func(self) -> str:
-        query_obj = getattr(self, "current_query", None)
-        if not query_obj:
-            return "操作失败：无法获取用户信息"
+    # # 内容函数：停止抢卡
+    # @llm_func("stop_autodl_grab", 
+    #     description="停止正在运行的AutoDL抢卡任务",
+    #     parameters=[])
+    # async def stop_autodl_grab_func(self) -> str:
+    #     query_obj = getattr(self, "current_query", None)
+    #     if not query_obj:
+    #         return "操作失败：无法获取用户信息"
             
-        user_id = query_obj.sender.id
+    #     user_id = query_obj.sender.id
         
-        if self._stop_grab_task(user_id):
-            return "✅ 抢卡任务已停止"
-        else:
-            return "❌ 当前没有正在运行的抢卡任务"
+    #     if self._stop_grab_task(user_id):
+    #         return "✅ 抢卡任务已停止"
+    #     else:
+    #         return "❌ 当前没有正在运行的抢卡任务"
             
     # # 设置当前查询对象（用于内容函数）
     # @handler(BeforeLLMFuncCallingEvent)
