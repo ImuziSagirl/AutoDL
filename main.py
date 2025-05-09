@@ -435,175 +435,175 @@ class HelloPlugin(BasePlugin):
         else:
             query.respond(f"账户余额: {balance} 元")
     
-#     # 抢卡菜单
-#     def _handle_grabmenu_command(self, query):
-#         user_id = query.sender.id
+    # 抢卡菜单
+    def _handle_grabmenu_command(self, query):
+        user_id = query.sender.id
         
-#         menu_text = """抢卡功能使用说明:
+        menu_text = """抢卡功能使用说明:
 
-# 1. 按GPU型号抢卡:
-#    /grabgpu <GPU型号>
-#    例如: /grabgpu A100
+1. 按GPU型号抢卡:
+   /grabgpu <GPU型号>
+   例如: /grabgpu A100
 
-# 2. 按实例UUID抢卡:
-#    /grabuuid <UUID>
-#    例如: /grabuuid i-abcdef123456
+2. 按实例UUID抢卡:
+   /grabuuid <UUID>
+   例如: /grabuuid i-abcdef123456
 
-# 3. 停止抢卡:
-#    /stopgrab
+3. 停止抢卡:
+   /stopgrab
 
-# 4. 查看抢卡状态:
-#    /grabstatus
-# """
-#         query.respond(menu_text)
+4. 查看抢卡状态:
+   /grabstatus
+"""
+        query.respond(menu_text)
     
-#     # 按GPU型号抢卡
-#     def _handle_grabgpu_command(self, query, gpu_type):
-#         user_id = query.sender.id
+    # 按GPU型号抢卡
+    def _handle_grabgpu_command(self, query, gpu_type):
+        user_id = query.sender.id
         
-#         if not gpu_type:
-#             query.respond("请提供GPU型号")
-#             return
+        if not gpu_type:
+            query.respond("请提供GPU型号")
+            return
             
-#         # 停止可能存在的抢卡任务
-#         self._stop_grab_task(user_id)
+        # 停止可能存在的抢卡任务
+        self._stop_grab_task(user_id)
         
-#         # 启动新的抢卡任务
-#         config = self._get_user_config(user_id)
+        # 启动新的抢卡任务
+        config = self._get_user_config(user_id)
         
-#         if not config.grab_config:
-#             config.grab_config = GrabConfig()
+        if not config.grab_config:
+            config.grab_config = GrabConfig()
             
-#         config.grab_config.enabled = True
-#         config.grab_config.gpu_types = [gpu_type]
-#         config.grab_config.instance_uuid = ""
-#         config.grab_config.is_running = True
+        config.grab_config.enabled = True
+        config.grab_config.gpu_types = [gpu_type]
+        config.grab_config.instance_uuid = ""
+        config.grab_config.is_running = True
         
-#         self._save_user_config(user_id, config)
+        self._save_user_config(user_id, config)
         
-#         # 启动抢卡线程
-#         self._start_grab_task(user_id, query)
+        # 启动抢卡线程
+        self._start_grab_task(user_id, query)
         
-#         query.respond(f"已启动对 {gpu_type} 的抢卡任务")
+        query.respond(f"已启动对 {gpu_type} 的抢卡任务")
     
-#     # 按实例UUID抢卡
-#     def _handle_grabuuid_command(self, query, uuid):
-#         user_id = query.sender.id
+    # 按实例UUID抢卡
+    def _handle_grabuuid_command(self, query, uuid):
+        user_id = query.sender.id
         
-#         if not uuid:
-#             query.respond("请提供实例UUID")
-#             return
+        if not uuid:
+            query.respond("请提供实例UUID")
+            return
             
-#         # 停止可能存在的抢卡任务
-#         self._stop_grab_task(user_id)
+        # 停止可能存在的抢卡任务
+        self._stop_grab_task(user_id)
         
-#         # 启动新的抢卡任务
-#         config = self._get_user_config(user_id)
+        # 启动新的抢卡任务
+        config = self._get_user_config(user_id)
         
-#         if not config.grab_config:
-#             config.grab_config = GrabConfig()
+        if not config.grab_config:
+            config.grab_config = GrabConfig()
             
-#         config.grab_config.enabled = True
-#         config.grab_config.gpu_types = []
-#         config.grab_config.instance_uuid = uuid
-#         config.grab_config.is_running = True
+        config.grab_config.enabled = True
+        config.grab_config.gpu_types = []
+        config.grab_config.instance_uuid = uuid
+        config.grab_config.is_running = True
         
-#         self._save_user_config(user_id, config)
+        self._save_user_config(user_id, config)
         
-#         # 启动抢卡线程
-#         self._start_grab_task(user_id, query)
+        # 启动抢卡线程
+        self._start_grab_task(user_id, query)
         
-#         query.respond(f"已启动对实例 {uuid} 的抢卡任务")
+        query.respond(f"已启动对实例 {uuid} 的抢卡任务")
     
-#     # 停止抢卡
-#     def _handle_stopgrab_command(self, query):
-#         user_id = query.sender.id
+    # 停止抢卡
+    def _handle_stopgrab_command(self, query):
+        user_id = query.sender.id
         
-#         if self._stop_grab_task(user_id):
-#             query.respond("抢卡任务已停止")
-#         else:
-#             query.respond("当前没有正在运行的抢卡任务")
+        if self._stop_grab_task(user_id):
+            query.respond("抢卡任务已停止")
+        else:
+            query.respond("当前没有正在运行的抢卡任务")
     
-#     # 抢卡状态
-#     def _handle_grabstatus_command(self, query):
-#         user_id = query.sender.id
-#         config = self._get_user_config(user_id)
+    # 抢卡状态
+    def _handle_grabstatus_command(self, query):
+        user_id = query.sender.id
+        config = self._get_user_config(user_id)
         
-#         if not config.grab_config or not config.grab_config.enabled:
-#             query.respond("抢卡任务未启动")
-#             return
+        if not config.grab_config or not config.grab_config.enabled:
+            query.respond("抢卡任务未启动")
+            return
             
-#         status = "正在运行" if config.grab_config.is_running else "已停止"
+        status = "正在运行" if config.grab_config.is_running else "已停止"
         
-#         status_text = f"抢卡任务状态: {status}\n"
+        status_text = f"抢卡任务状态: {status}\n"
         
-#         if config.grab_config.instance_uuid:
-#             status_text += f"抢卡实例UUID: {config.grab_config.instance_uuid}\n"
-#         elif config.grab_config.gpu_types:
-#             status_text += f"抢卡GPU型号: {', '.join(config.grab_config.gpu_types)}\n"
+        if config.grab_config.instance_uuid:
+            status_text += f"抢卡实例UUID: {config.grab_config.instance_uuid}\n"
+        elif config.grab_config.gpu_types:
+            status_text += f"抢卡GPU型号: {', '.join(config.grab_config.gpu_types)}\n"
             
-#         status_text += f"检查间隔: {config.grab_config.check_interval}秒"
+        status_text += f"检查间隔: {config.grab_config.check_interval}秒"
         
-#         query.respond(status_text)
+        query.respond(status_text)
     
-#     # 停止抢卡任务
-#     def _stop_grab_task(self, user_id: int) -> bool:
-#         if user_id in self.grab_tasks and self.grab_tasks[user_id] is not None:
-#             # 设置停止信号
-#             self.grab_tasks[user_id].set()
+    # 停止抢卡任务
+    def _stop_grab_task(self, user_id: int) -> bool:
+        if user_id in self.grab_tasks and self.grab_tasks[user_id] is not None:
+            # 设置停止信号
+            self.grab_tasks[user_id].set()
             
-#             # 更新用户配置
-#             config = self._get_user_config(user_id)
-#             if config.grab_config:
-#                 config.grab_config.is_running = False
-#                 self._save_user_config(user_id, config)
+            # 更新用户配置
+            config = self._get_user_config(user_id)
+            if config.grab_config:
+                config.grab_config.is_running = False
+                self._save_user_config(user_id, config)
                 
-#             # 清理资源
-#             if user_id in self.grab_threads:
-#                 self.grab_threads[user_id].join(timeout=1.0)
-#                 del self.grab_threads[user_id]
+            # 清理资源
+            if user_id in self.grab_threads:
+                self.grab_threads[user_id].join(timeout=1.0)
+                del self.grab_threads[user_id]
                 
-#             del self.grab_tasks[user_id]
-#             return True
+            del self.grab_tasks[user_id]
+            return True
             
-#         return False
+        return False
     
-#     # 启动抢卡任务
-#     def _start_grab_task(self, user_id: int, query) -> None:
-#         config = self._get_user_config(user_id)
-#         if not config.grab_config or not config.grab_config.enabled:
-#             return
+    # 启动抢卡任务
+    def _start_grab_task(self, user_id: int, query) -> None:
+        config = self._get_user_config(user_id)
+        if not config.grab_config or not config.grab_config.enabled:
+            return
             
-#         # 创建停止信号
-#         stop_signal = threading.Event()
-#         self.grab_tasks[user_id] = stop_signal
+        # 创建停止信号
+        stop_signal = threading.Event()
+        self.grab_tasks[user_id] = stop_signal
         
-#         # 创建并启动抢卡线程
-#         thread = threading.Thread(
-#             target=self._grab_task_loop,
-#             args=(user_id, query, stop_signal)
-#         )
-#         thread.daemon = True
-#         thread.start()
+        # 创建并启动抢卡线程
+        thread = threading.Thread(
+            target=self._grab_task_loop,
+            args=(user_id, query, stop_signal)
+        )
+        thread.daemon = True
+        thread.start()
         
-#         self.grab_threads[user_id] = thread
+        self.grab_threads[user_id] = thread
     
-#     # 抢卡任务循环
-#     def _grab_task_loop(self, user_id: int, query, stop_signal: threading.Event) -> None:
-#         config = self._get_user_config(user_id)
-#         if not config.grab_config:
-#             return
+    # # 抢卡任务循环
+    # def _grab_task_loop(self, user_id: int, query, stop_signal: threading.Event) -> None:
+    #     config = self._get_user_config(user_id)
+    #     if not config.grab_config:
+    #         return
             
-#         client = self._init_autodl_client(user_id)
-#         if not client:
-#             query.respond("抢卡失败: 未设置用户名或密码")
-#             self._stop_grab_task(user_id)
-#             return
+    #     client = self._init_autodl_client(user_id)
+    #     if not client:
+    #         query.respond("抢卡失败: 未设置用户名或密码")
+    #         self._stop_grab_task(user_id)
+    #         return
             
-#         # 获取检查间隔
-#         interval = config.grab_config.check_interval
-#         if interval < 3:
-#             interval = 3  # 最小间隔3秒
+    #     # 获取检查间隔
+    #     interval = config.grab_config.check_interval
+    #     if interval < 3:
+    #         interval = 3  # 最小间隔3秒
             
 #         try:
 #             # 抢卡循环
