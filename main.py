@@ -660,16 +660,16 @@ class HelloPlugin(BasePlugin):
                 config.grab_config.is_running = False
                 self._save_user_config(user_id, config)
     
-#     # 插件初始化时重新启动之前的抢卡任务
-#     @handler(PluginInitEvent)
-#     async def on_init(self, ctx: EventContext):
-#         # 自动恢复抢卡任务
-#         for user_id, config in self.user_configs.items():
-#             if config.grab_config and config.grab_config.enabled and config.grab_config.is_running:
-#                 self.host.logger.info(f"为用户 {user_id} 重启抢卡任务")
-#                 # 启动抢卡线程 (需要修改_start_grab_task方法适应新的消息发送方式)
-#                 self._start_grab_task(user_id)
-#                 self.host.send_message(user_id, "系统重启，抢卡任务已自动恢复")
+    # 插件初始化时重新启动之前的抢卡任务
+    @handler(PluginInitEvent)
+    async def on_init(self, ctx: EventContext):
+        # 自动恢复抢卡任务
+        for user_id, config in self.user_configs.items():
+            if config.grab_config and config.grab_config.enabled and config.grab_config.is_running:
+                self.host.logger.info(f"为用户 {user_id} 重启抢卡任务")
+                # 启动抢卡线程 (需要修改_start_grab_task方法适应新的消息发送方式)
+                self._start_grab_task(user_id)
+                self.host.send_message(user_id, "系统重启，抢卡任务已自动恢复")
 
 #     # 内容函数：查询GPU状态
 #     @llm_func("check_autodl_gpu", 
