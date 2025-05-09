@@ -334,106 +334,106 @@ class HelloPlugin(BasePlugin):
         else:
             query.respond("实例关闭失败")
     
-#     # 刷新实例时长
-#     def _handle_refresh_command(self, query, uuid):
-#         user_id = query.sender.id
-#         client = self._init_autodl_client(user_id)
+    # 刷新实例时长
+    def _handle_refresh_command(self, query, uuid):
+        user_id = query.sender.id
+        client = self._init_autodl_client(user_id)
         
-#         if not client:
-#             query.respond("请先设置用户名和密码")
-#             return
+        if not client:
+            query.respond("请先设置用户名和密码")
+            return
             
-#         if not uuid:
-#             query.respond("请提供实例UUID")
-#             return
+        if not uuid:
+            query.respond("请提供实例UUID")
+            return
         
-#         query.respond(f"正在刷新实例时长 {uuid}...")
+        query.respond(f"正在刷新实例时长 {uuid}...")
         
-#         # 先开启实例(无卡模式)
-#         start_success = client.power_on(uuid, use_cpu=True)
-#         if not start_success:
-#             query.respond("启动实例失败，无法刷新时长")
-#             return
+        # 先开启实例(无卡模式)
+        start_success = client.power_on(uuid, use_cpu=True)
+        if not start_success:
+            query.respond("启动实例失败，无法刷新时长")
+            return
         
-#         # 等待实例启动
-#         time.sleep(5)
+        # 等待实例启动
+        time.sleep(5)
         
-#         # 关闭实例
-#         stop_success = client.power_off(uuid)
-#         if not stop_success:
-#             query.respond("关闭实例失败，请手动关闭")
-#             return
+        # 关闭实例
+        stop_success = client.power_off(uuid)
+        if not stop_success:
+            query.respond("关闭实例失败，请手动关闭")
+            return
             
-#         query.respond("实例时长刷新成功")
+        query.respond("实例时长刷新成功")
     
-#     # 刷新所有实例时长
-#     def _handle_refreshall_command(self, query):
-#         user_id = query.sender.id
-#         client = self._init_autodl_client(user_id)
+    # 刷新所有实例时长
+    def _handle_refreshall_command(self, query):
+        user_id = query.sender.id
+        client = self._init_autodl_client(user_id)
         
-#         if not client:
-#             query.respond("请先设置用户名和密码")
-#             return
+        if not client:
+            query.respond("请先设置用户名和密码")
+            return
         
-#         query.respond("正在获取实例列表...")
-#         instances = client.get_instances()
+        query.respond("正在获取实例列表...")
+        instances = client.get_instances()
         
-#         if not instances:
-#             query.respond("获取实例信息失败")
-#             return
+        if not instances:
+            query.respond("获取实例信息失败")
+            return
         
-#         query.respond(f"开始刷新 {len(instances)} 个实例的时长...")
+        query.respond(f"开始刷新 {len(instances)} 个实例的时长...")
         
-#         for instance in instances:
-#             uuid = instance.uuid
-#             query.respond(f"正在刷新实例 {instance.machine_alias} ({uuid})...")
+        for instance in instances:
+            uuid = instance.uuid
+            query.respond(f"正在刷新实例 {instance.machine_alias} ({uuid})...")
             
-#             # 开启实例(无卡模式)
-#             start_success = client.power_on(uuid, use_cpu=True)
-#             if not start_success:
-#                 query.respond(f"启动实例 {uuid} 失败，跳过")
-#                 continue
+            # 开启实例(无卡模式)
+            start_success = client.power_on(uuid, use_cpu=True)
+            if not start_success:
+                query.respond(f"启动实例 {uuid} 失败，跳过")
+                continue
                 
-#             # 等待实例启动
-#             time.sleep(5)
+            # 等待实例启动
+            time.sleep(5)
             
-#             # 关闭实例
-#             stop_success = client.power_off(uuid)
-#             if not stop_success:
-#                 query.respond(f"关闭实例 {uuid} 失败，请手动关闭")
-#                 continue
+            # 关闭实例
+            stop_success = client.power_off(uuid)
+            if not stop_success:
+                query.respond(f"关闭实例 {uuid} 失败，请手动关闭")
+                continue
                 
-#             query.respond(f"实例 {instance.machine_alias} 时长刷新成功")
+            query.respond(f"实例 {instance.machine_alias} 时长刷新成功")
             
-#             # 防止请求过快被限流
-#             time.sleep(3)
+            # 防止请求过快被限流
+            time.sleep(3)
         
-#         query.respond("所有实例时长刷新完成")
+        query.respond("所有实例时长刷新完成")
     
-#     # 查看当前用户
-#     def _handle_getuser_command(self, query):
-#         user_id = query.sender.id
-#         config = self._get_user_config(user_id)
+    # 查看当前用户
+    def _handle_getuser_command(self, query):
+        user_id = query.sender.id
+        config = self._get_user_config(user_id)
         
-#         if config.username:
-#             query.respond(f"当前设置的用户名: {config.username}")
-#         else:
-#             query.respond("当前未设置用户名")
+        if config.username:
+            query.respond(f"当前设置的用户名: {config.username}")
+        else:
+            query.respond("当前未设置用户名")
     
-#     # 查看余额
-#     def _handle_balance_command(self, query):
-#         user_id = query.sender.id
-#         client = self._init_autodl_client(user_id)
+    # 查看余额
+    def _handle_balance_command(self, query):
+        user_id = query.sender.id
+        client = self._init_autodl_client(user_id)
         
-#         if not client:
-#             query.respond("请先设置用户名和密码")
-#             return
+        if not client:
+            query.respond("请先设置用户名和密码")
+            return
         
-#         balance = client.get_balance()
-#         if balance < 0:
-#             query.respond("获取余额失败")
-#         else:
-#             query.respond(f"账户余额: {balance} 元")
+        balance = client.get_balance()
+        if balance < 0:
+            query.respond("获取余额失败")
+        else:
+            query.respond(f"账户余额: {balance} 元")
     
 #     # 抢卡菜单
 #     def _handle_grabmenu_command(self, query):
