@@ -6,7 +6,6 @@ from storage import UserStorage
 import threading
 import time
 import logging
-from typing import Dict, List, Optional, Any
 
 # 注册插件
 @register(name="Hello", description="hello world", version="0.1", author="RockChinQ")
