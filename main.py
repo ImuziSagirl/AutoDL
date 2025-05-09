@@ -155,39 +155,39 @@ class HelloPlugin(BasePlugin):
             self._handle_grabstatus_command(ctx.event.query)
             ctx.prevent_default()
     
-#     @handler(GroupNormalMessageReceived)
-#     async def handle_group_message(self, ctx: EventContext):
-#         msg = ctx.event.text_message
-#         user_id = ctx.event.sender_id
+    @handler(GroupNormalMessageReceived)
+    async def handle_group_message(self, ctx: EventContext):
+        msg = ctx.event.text_message
+        user_id = ctx.event.sender_id
         
-#         # 群聊命令处理与个人消息处理类似，根据需要实现
-#         if msg.startswith("/help"):
-#             ctx.add_return("reply", [self._get_help_text()])
-#             ctx.prevent_default()
-#         # ... 其他命令处理 ...
+        # 群聊命令处理与个人消息处理类似，根据需要实现
+        if msg.startswith("/help"):
+            ctx.add_return("reply", [self._get_help_text()])
+            ctx.prevent_default()
+        # ... 其他命令处理 ...
     
-#     # 帮助信息
-#     def _get_help_text(self):
-#         return """AutoDL监控与抢卡助手
+    # 帮助信息
+    def _get_help_text(self):
+        return """AutoDL监控与抢卡助手
 
-# 命令列表:
-# /user <用户名> - 设置用户名（手机号）
-# /password <密码> - 设置密码
-# /gpuvalid - 查看GPU空闲情况
-# /instances - 查看实例详情
-# /start <uuid> - 启动GPU实例
-# /startcpu <uuid> - 启动GPU实例(无卡模式)
-# /stop <uuid> - 关闭GPU实例
-# /refresh <uuid> - 无卡模式重置实例时长
-# /refreshall - 重置所有实例时长
-# /getuser - 查看当前设置的用户
-# /balance - 查看账户余额
-# /grabmenu - 显示抢卡菜单
-# /grabgpu <gpu类型> - 设置抢卡GPU型号并启动
-# /grabuuid <uuid> - 按实例UUID抢卡
-# /stopgrab - 停止抢卡任务
-# /grabstatus - 查看抢卡状态
-# """
+命令列表:
+/user <用户名> - 设置用户名（手机号）
+/password <密码> - 设置密码
+/gpuvalid - 查看GPU空闲情况
+/instances - 查看实例详情
+/start <uuid> - 启动GPU实例
+/startcpu <uuid> - 启动GPU实例(无卡模式)
+/stop <uuid> - 关闭GPU实例
+/refresh <uuid> - 无卡模式重置实例时长
+/refreshall - 重置所有实例时长
+/getuser - 查看当前设置的用户
+/balance - 查看账户余额
+/grabmenu - 显示抢卡菜单
+/grabgpu <gpu类型> - 设置抢卡GPU型号并启动
+/grabuuid <uuid> - 按实例UUID抢卡
+/stopgrab - 停止抢卡任务
+/grabstatus - 查看抢卡状态
+"""
     
 #     # 密码设置
 #     def _handle_password_command(self, query, password):
