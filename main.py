@@ -1,8 +1,8 @@
 from pkg.plugin.context import register, handler, llm_func, BasePlugin, APIHost, EventContext
 from pkg.plugin.events import *  # 导入事件类
-from autodl_client import AutoDLClient
-from models import AutoDLConfig, GrabConfig, GrabMenuData, Instance
-from storage import UserStorage
+from .autodl_client import AutoDLClient
+from .models import AutoDLConfig, GrabConfig, GrabMenuData, Instance
+from .storage import UserStorage
 
 # 注册插件
 @register(name="Hello", description="hello world", version="0.1", author="RockChinQ")
