@@ -3,7 +3,7 @@ import json
 import sqlite3
 from typing import Dict, Any, Optional
 
-from models import AutoDLConfig
+from .models import AutoDLConfig
 
 class UserStorage:
     def __init__(self, db_path: str = "users.db"):

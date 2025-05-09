@@ -4,7 +4,7 @@ import time
 import logging
 from typing import List, Dict, Any, Optional
 
-from models import Instance
+from .models import Instance
 
 class AutoDLClient:
     BASE_URL = "https://www.autodl.com/api/v1"
