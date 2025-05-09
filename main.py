@@ -1,9 +1,9 @@
 from pkg.plugin.context import register, handler, llm_func, BasePlugin, APIHost, EventContext
 from pkg.plugin.events import *
 
-from .autodl_client import AutoDLClient
-from .models import AutoDLConfig, GrabConfig, GrabMenuData, Instance
-from .storage import UserStorage
+from autodl_client import AutoDLClient
+from models import AutoDLConfig, GrabConfig, GrabMenuData, Instance
+from storage import UserStorage
 import threading
 import time
 import logging
