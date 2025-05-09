@@ -856,12 +856,12 @@ class HelloPlugin(BasePlugin):
     # async def after_func_calling(self, ctx: EventContext):
     #     self.current_query = None
 
-    # 插件卸载时触发
-    def __del__(self):
-        # 停止所有抢卡任务
-        for user_id in list(self.grab_tasks.keys()):
-            self._stop_grab_task(user_id)
+    # # 插件卸载时触发
+    # def __del__(self):
+    #     # 停止所有抢卡任务
+    #     for user_id in list(self.grab_tasks.keys()):
+    #         self._stop_grab_task(user_id)
         
-        # 保存所有用户配置
-        for user_id, config in self.user_configs.items():
-            self.storage.save_user(user_id, config)
+    #     # 保存所有用户配置
+    #     for user_id, config in self.user_configs.items():
+    #         self.storage.save_user(user_id, config)
