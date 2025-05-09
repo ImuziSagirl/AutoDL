@@ -14,7 +14,22 @@ class MyPlugin(BasePlugin):
 
     # 插件加载时触发
     def __init__(self, host: APIHost):
-        pass
+        super().__init__(host)
+        self.host = host
+        self.ap = host.ap
+        
+        # 用户配置
+        self.storage = UserStorage("autodl_users.db")
+        self.user_configs: Dict[int, AutoDLConfig] = {}
+        
+        # 抢卡任务
+        self.grab_tasks: Dict[int, threading.Event] = {}
+        self.grab_threads: Dict[int, threading.Thread] = {}
+        
+        # 加载所有用户配置
+        self.user_configs = self.storage.load_all_users()
+        
+        self.host.logger.info("AutoDL插件初始化完成")
 
     # 异步初始化
     async def initialize(self):
