@@ -4,9 +4,6 @@ from autodl_client import AutoDLClient
 from models import AutoDLConfig, GrabConfig, GrabMenuData, Instance
 from storage import UserStorage
 
-import time
-import logging
-
 # 注册插件
 @register(name="Hello", description="hello world", version="0.1", author="RockChinQ")
 class MyPlugin(BasePlugin):
