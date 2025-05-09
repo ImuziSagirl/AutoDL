@@ -94,66 +94,66 @@ class HelloPlugin(BasePlugin):
         
         return AutoDLClient(config.username, config.password)
     
-#     # 命令处理
-#     @handler(PersonNormalMessageReceived)
-#     async def handle_person_message(self, ctx: EventContext):
-#         msg = ctx.event.text_message
-#         user_id = ctx.event.sender_id
+    # 命令处理
+    @handler(PersonNormalMessageReceived)
+    async def handle_person_message(self, ctx: EventContext):
+        msg = ctx.event.text_message
+        user_id = ctx.event.sender_id
         
-#         # 命令处理
-#         if msg.startswith("/help"):
-#             ctx.add_return("reply", [self._get_help_text()])
-#             ctx.prevent_default()
-#         elif msg.startswith("/user "):
-#             username = msg[6:]
-#             self._set_user(user_id, username)
-#             ctx.add_return("reply", [f"用户名已设置为: {username}"])
-#             ctx.prevent_default()
-#         elif msg.startswith("/password "):
-#             self._handle_password_command(ctx.event.query, msg[10:])
-#             ctx.prevent_default()
-#         elif msg.startswith("/gpuvalid"):
-#             self._handle_gpuvalid_command(ctx.event.query)
-#             ctx.prevent_default()
-#         elif msg.startswith("/instances"):
-#             self._handle_instances_command(ctx.event.query)
-#             ctx.prevent_default()
-#         elif msg.startswith("/start "):
-#             self._handle_start_command(ctx.event.query, msg[7:])
-#             ctx.prevent_default()
-#         elif msg.startswith("/startcpu "):
-#             self._handle_startcpu_command(ctx.event.query, msg[10:])
-#             ctx.prevent_default()
-#         elif msg.startswith("/stop "):
-#             self._handle_stop_command(ctx.event.query, msg[6:])
-#             ctx.prevent_default()
-#         elif msg.startswith("/refresh "):
-#             self._handle_refresh_command(ctx.event.query, msg[9:])
-#             ctx.prevent_default()
-#         elif msg.startswith("/refreshall"):
-#             self._handle_refreshall_command(ctx.event.query)
-#             ctx.prevent_default()
-#         elif msg.startswith("/getuser"):
-#             self._handle_getuser_command(ctx.event.query)
-#             ctx.prevent_default()
-#         elif msg.startswith("/balance"):
-#             self._handle_balance_command(ctx.event.query)
-#             ctx.prevent_default()
-#         elif msg.startswith("/grabmenu"):
-#             self._handle_grabmenu_command(ctx.event.query)
-#             ctx.prevent_default()
-#         elif msg.startswith("/grabgpu "):
-#             self._handle_grabgpu_command(ctx.event.query, msg[9:])
-#             ctx.prevent_default()
-#         elif msg.startswith("/grabuuid "):
-#             self._handle_grabuuid_command(ctx.event.query, msg[10:])
-#             ctx.prevent_default()
-#         elif msg.startswith("/stopgrab"):
-#             self._handle_stopgrab_command(ctx.event.query)
-#             ctx.prevent_default()
-#         elif msg.startswith("/grabstatus"):
-#             self._handle_grabstatus_command(ctx.event.query)
-#             ctx.prevent_default()
+        # 命令处理
+        if msg.startswith("/help"):
+            ctx.add_return("reply", [self._get_help_text()])
+            ctx.prevent_default()
+        elif msg.startswith("/user "):
+            username = msg[6:]
+            self._set_user(user_id, username)
+            ctx.add_return("reply", [f"用户名已设置为: {username}"])
+            ctx.prevent_default()
+        elif msg.startswith("/password "):
+            self._handle_password_command(ctx.event.query, msg[10:])
+            ctx.prevent_default()
+        elif msg.startswith("/gpuvalid"):
+            self._handle_gpuvalid_command(ctx.event.query)
+            ctx.prevent_default()
+        elif msg.startswith("/instances"):
+            self._handle_instances_command(ctx.event.query)
+            ctx.prevent_default()
+        elif msg.startswith("/start "):
+            self._handle_start_command(ctx.event.query, msg[7:])
+            ctx.prevent_default()
+        elif msg.startswith("/startcpu "):
+            self._handle_startcpu_command(ctx.event.query, msg[10:])
+            ctx.prevent_default()
+        elif msg.startswith("/stop "):
+            self._handle_stop_command(ctx.event.query, msg[6:])
+            ctx.prevent_default()
+        elif msg.startswith("/refresh "):
+            self._handle_refresh_command(ctx.event.query, msg[9:])
+            ctx.prevent_default()
+        elif msg.startswith("/refreshall"):
+            self._handle_refreshall_command(ctx.event.query)
+            ctx.prevent_default()
+        elif msg.startswith("/getuser"):
+            self._handle_getuser_command(ctx.event.query)
+            ctx.prevent_default()
+        elif msg.startswith("/balance"):
+            self._handle_balance_command(ctx.event.query)
+            ctx.prevent_default()
+        elif msg.startswith("/grabmenu"):
+            self._handle_grabmenu_command(ctx.event.query)
+            ctx.prevent_default()
+        elif msg.startswith("/grabgpu "):
+            self._handle_grabgpu_command(ctx.event.query, msg[9:])
+            ctx.prevent_default()
+        elif msg.startswith("/grabuuid "):
+            self._handle_grabuuid_command(ctx.event.query, msg[10:])
+            ctx.prevent_default()
+        elif msg.startswith("/stopgrab"):
+            self._handle_stopgrab_command(ctx.event.query)
+            ctx.prevent_default()
+        elif msg.startswith("/grabstatus"):
+            self._handle_grabstatus_command(ctx.event.query)
+            ctx.prevent_default()
     
 #     @handler(GroupNormalMessageReceived)
 #     async def handle_group_message(self, ctx: EventContext):
